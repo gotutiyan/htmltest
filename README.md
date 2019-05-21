@@ -18,7 +18,8 @@ URL:https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim/1626
 | 数列 | 左端 | 右端 | 区間の要素の総和 |  
 |:----|:----|:----|:----|  
 | 1 2 3 4 5 6 7    | left=0| right=0 | sum=0 |  
-|`1` 2 3 4 5 6 7  |left=0| right=1| sum=1|  
+| `1` 2 3 4 5 6 7  | left=0 | right=1 | sum=1 | 
+
 `1 2` 3 4 5 6 7  |left=0 right=2 sum=3  
 `1 2 3` 4 5 6 7  left=0 right=3 sum=6  
 `1 2 3 4` 5 6 7  left=0 right=4 sum=10  
