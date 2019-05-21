@@ -1,8 +1,8 @@
-#問題
+# 問題
 所得格差
 URL:https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim/1624URL:
 
-###問題概要
+### 問題概要
 長さnの数列が与えられます。数列全ての要素の平均を求め、平均以下の要素がいくつあるかを出力してください。
 
 ---
