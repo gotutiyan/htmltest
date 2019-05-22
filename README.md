@@ -28,7 +28,7 @@ URL:https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim/1627
 
 ### 枝狩り
 もう少し計算量を落とすために、枝狩りと呼ばれるものを行います。  
-問題文に図示されている表の1行目は、以下のようになっています。
+問題文に図示されている表の1行目は、以下のようになっています。  
 |Team1|Team2|Team3|Team4|Team5|  
 |:--|:--|:--|:--|:--|  
 ||||lost|lost|  
