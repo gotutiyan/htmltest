@@ -63,9 +63,40 @@ URL:https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim/1627
 実装にあたって、まずは成績表を作成します。これは2次元配列で、`v[i][j] = チームiのチームjに対する試合結果 = {-1 or 1 or 0}`と置きます。最初は`-1`で初期化しておいて、入力の試合結果については`1 or 0`で埋めておきます。  
 そして、全探索するために、まだ結果が決まっていないチームの組みを全て配列に格納します。組みの持ち方は`pair<int,int>`でも良いし、適当に構造体を作っても良いです。今回は構造体でやります。  
 
-ここまでの処理で、例えばサンプルの最初のケースでは以下のようにデータを作れます。
+適当にPoint構造体を作っておきました。これで2つの値の組を1つの変数で扱えます。`pair<int,int>`でも良いですが、メンバへのアクセスがfirst, secondでしかできないので、意味がわかりにくいです。  
+入力を受けて`0 or 1`で埋めたあと、なおも`-1`で残っているところは未対戦の組です。このようなi,j(i< j)については、points[]に追加します。points[]
+
 ~~~
-2次元配列：
+struct Point{
+    int t1,t2;
+    Point(int t1,int t2){
+        this->t1=t1;
+        this->t2=t2;
+    }
+};
+vector<vector<int>> v(サイズを指定);
+vector<Point> points;
+
+int main(){
+    int m;cin>>m;
+    for(int i=0;i<m;i++){
+        int win,lose;
+        cin>>win>>lose;
+        win--; lose--; //0-index
+        v[win][lose]=1;
+        v[lose][win]=0;
+    }
+    //まだ戦っていないところを保存
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if(v[i][j]==-1)points.push_back(Point{i,j});
+        }
+    }
+}
+~~~
+この処理で、例えばサンプルの最初のケースでは以下のようにデータを作れます。
+~~~
+2次元配列v：
 X  -1 -1  0  0
 -1  X  0 -1 -1
 -1  1  X -1 -1
@@ -73,13 +104,85 @@ X  -1 -1  0  0
 1  -1 -1 -1  X
 
 未対戦の組み合わせ(1-index)：
-{(1,2),(1,3),(2,4),(2,5),(3,4),(3,5),(4,5)}
+points[]=[(1,2),(1,3),(2,4),(2,5),(3,4),(3,5),(4,5)]
 ~~~
 
-準備が整ったら全探索を開始します。基本的には再帰関数で行います。  
-今回はけっこう典型的な全探索の形で書けるので、まずはコードを眺めましょう。  
+準備が整ったら全探索を開始します。  
+今回はけっこう典型的なTHE・全探索の形で書けるので、まずはコードを眺めましょう。  
 ~~~
+void dfs(int idx){
+    if(idx==points.size()){
+        if(is_playoff())ans++;
+        return;
+    }
+    //t1が勝ってt2が負ける
+    Point point=points[idx];
+    v[point.t1][point.t2]=1;
+    v[point.t2][point.t1]=0;
+    if(will_playoff(point.t1))dfs(idx+1);
+
+    //t1が負けてt2が勝つ
+    v[point.t1][point.t2]=0;
+    v[point.t2][point.t1]=1;
+    if(will_playoff(point.t1))dfs(idx+1);
+
+    v[point.t1][point.t2]=v[point.t2][point.t1]=-1;
+    return;
+}
 ~~~
+再帰関数を用います。関数名のdfsとは深さ優先探索のことです。  
+引数のidxとは、points[]の１次元配列の添字です。  
+
+dfs(int idx)を呼ばれたとき、point[idx]について考えています。points[idx]に格納されている2つの整数は、まだ未対戦のチーム番号です。このチームについて、勝ち負けの2通りを試します。試すというのは、実際に表に値を入れてみることです。試したら、その状態を保持したまま次のidxを試します。
+
+ここで重要なのがwill_playoff()の役割です。ここで枝狩りをしています。処理はこうです。
+~~~
+//将来的にプレーオフになる可能性があるか
+bool will_playoff(int t1){
+    int win=0,lose=0,not_match=0;
+    for(int i=0;i<n;i++){
+        if(t1==i)continue;       //自分自身とは戦わない
+        if(v[t1][i]==1)win++;
+        else if(v[t1][i]==0)lose++;
+        else not_match++;
+    }
+    if(abs(win-lose)>not_match)return false;
+    else return true;
+}
+~~~
+チームt1についての行を見て、-1,0,1の数を数えます。プレーオフになる可能性を判定するには、-1を0か1に変化させることで、最終的に0と1の個数を合わせるように調整するイメージで、`abs(won-lost)>not_match`の真偽を見ます。
+
+プレーオフの可能性を判定するには、全ての行について見なければならないと思うかもしれませんが、あるdfs(idx)を呼んだ時に変化するのはチームpoints[idx].t1に関する行だけです。なのでwill_playoff()でも、t1の行だけを見て差し支えありません。
+
+このようにして探索を進める中で、idxがpoints[]の(添字的に)最後まで到達したとしましょう。この時、未対戦のチーム全てについて表を埋めたので、表は対角成分をのぞいて全て埋まっていることが保証されます。この時、本当にプレーオフなのかを調べて、そうであれば解答を1増やすことをします。
+
+プレーオフの判定にはis_playoff()を呼びましょう。これは全ての行について(wonの個数)==(lostの個数)であるかを調べます。
+~~~
+//プレーオフであるかどうか
+bool is_playoff(){
+    for(int i=0;i<n;i++){
+        int win=0,lose=0;
+        for(int j=0;j<n;j++){
+            if(i==j)continue;
+            if(v[i][j]==1)win++;
+            else if(v[i][j]==0)lose++;
+        }
+        if(win!=lose)return false;
+    }
+    return true;
+}
+~~~
+
+dfs()の呼び方は至ってシンプルです。idxは0から始めれば良いので、dfs(0)と呼ぶだけで全探索が行われます。また、それによってansも更新されるので、素直に出力して、問題を解くことができました。
+~~~
+int main(){
+    //何かしらの処理
+    .............
+    dfs(0);
+    cout<<ans<<endl;
+}
+~~~
+
 
 
 
