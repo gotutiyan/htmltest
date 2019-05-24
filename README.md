@@ -13,13 +13,14 @@ URL:https://onlinejudge.u-aizu.ac.jp/challenges/sources/ICPC/Prelim/1627
 * 任意の行について、wonとlostの数が同じである
 
 問題文における正解例の図では、どの行を見てもwonとlostが2個ずつになっています。このような時、プレーオフになります。ここで、「行を見る」とは、表を横向きに見る気持ちで書いていますが、実は列を見ても（＝縦に見ても）良いです。これは対角線を基準として対称になっているからですが、詳しくはあとで出てきます。  
-|﻿|Team1|Team2|Team3|Team4|Team5|||
-|Team1|X|won|won|lost|lost|→|won:2  lost:2|
+|﻿|Team1|Team2|Team3|Team4|Team5|||  
+|Team1|X|won|won|lost|lost|→|won:2  lost:2|  
 |:--|:--|:--|:--|:--|:--|:--|:--|  
-|Team2|lost|X|lost|won|won|→|won:2  lost:2|
-|Team3|lost|won|X|won|lost|→|won:2  lost:2|
-|Team4|won|lost|lost|X|won|→|won:2  lost:2|
-|Team5|won|lost|won|lost|X|→|won:2  lost:2|
+|Team2|lost|X|lost|won|won|→|won:2  lost:2|  
+|Team3|lost|won|X|won|lost|→|won:2  lost:2|  
+|Team4|won|lost|lost|X|won|→|won:2  lost:2|  
+|Team5|won|lost|won|lost|X|→|won:2  lost:2|  
+
 
 
 
