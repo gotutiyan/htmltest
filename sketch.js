@@ -215,7 +215,7 @@ function tweet(){
     let tweet_text = '';
     for(let i=0; i<N_STAGES; i++){
         if(clear_count[i] != 0){
-            tweet_text += '世界' + (i+1) + ',ステージ:' + clear_count[i] + '%0A';
+            tweet_text += '世界:' + (i+1) + ',ステージ:' + clear_count[i] + '%0A';
         }
     }
     let tweet_url = 'gotutiyan.github.io/htmltest' + '%0A';
@@ -225,5 +225,6 @@ function tweet(){
         + '&url=' + tweet_url
         + '&hashtags=' + tweet_hashtag
     console.log(link);
+    window.open(link, '_blank');
     return link;
 }

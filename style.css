@@ -24,3 +24,9 @@ canvas{
     left: 0;
     margin: auto;
   }
+
+#tweet{
+    background-color: dodgerblue;
+    color: white;
+    border: 0px none;
+}

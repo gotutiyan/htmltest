@@ -14,17 +14,14 @@
 </head>
 <body>
     <div id='content'>
-        <h1 id='show_world' style="text-align: center;"></h1>
+        <h3 id='show_world' style="text-align: center;"></h3>
         <button id='confirm_cookie' onclick="confirm_cookie()">オートセーブを有効にする</button>
-        <button onclick="tweet()">
-            <a href="javascript:tweet()" target="_blank">Tweet: #無限一筆書き</a>
-        </button>
         <button onclick="init_state()">盤面再生成</button>
         <button onclick="update_stage(-1)">前の世界へ</buttos>
         <button onclick="update_stage(1)">次の世界へ</button>
-        
-        <div id="result"></div>
-        <!-- <button onclick="reset_game()">リセット</button> -->
+        <br>
+        <button id='tweet' onclick="tweet()">Tweet #無限一筆書き</button>
+        <div id='result'></div>
     </div>
 </body>
 <footer>
