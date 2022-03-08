@@ -4,6 +4,7 @@ let moved_history = [];
 let frame_len_half = 250;
 let tile_len = 0;
 let can_use_cookie = false;
+let state;
 function setup(){
     let canvas_len = min(windowWidth*0.85, windowHeight*0.85);
     let canvas = createCanvas(canvas_len, canvas_len);
@@ -61,22 +62,22 @@ function draw_tile(n, frame_len_half, tile_len, state){
 function mouseDragged(){
     if(!judge_criteria[stage]()) return;
     if(cleared)return;
-    offset_x = width/2 - frame_len_half;
-    offset_y = height/2 - frame_len_half;
+    let offset_x = width/2 - frame_len_half;
+    let offset_y = height/2 - frame_len_half;
     if(mouseX - offset_x < 0 || 2*frame_len_half < mouseX - offset_x)return;
     if(mouseY - offset_y < 0 || 2*frame_len_half < mouseY - offset_y)return;
-    prev_tile = move_history[move_history.length-1];
+    let prev_tile = move_history[move_history.length-1];
     px_idx = prev_tile.x;
     py_idx = prev_tile.y;
-    x_idx = int((mouseX - offset_x) / tile_len);
-    y_idx = int((mouseY - offset_y) / tile_len);
+    let x_idx = int((mouseX - offset_x) / tile_len);
+    let y_idx = int((mouseY - offset_y) / tile_len);
     if(state[x_idx][y_idx] == config.WHITE_ID
         && (Math.abs(px_idx - x_idx) + Math.abs(py_idx - y_idx)) == 1){
         state[x_idx][y_idx] = 1;
         move_history.push({'x':x_idx, 'y':y_idx});
     }else if(state[x_idx][y_idx] == config.WROTE_ID){
         while(true){
-            ix = move_history.pop();
+            let ix = move_history.pop();
             state[ix.x][ix.y] = config.WHITE_ID;
             if(ix.x == x_idx && ix.y == y_idx){
                 move_history.push(ix);
@@ -95,7 +96,7 @@ function mouseReleased(){
         }
     }
     for(let i=0; i<layout.white_ix.length; i++){
-        ix = layout.white_ix[i];
+        let ix = layout.white_ix[i];
         state[ix.x][ix.y] = config.WHITE_ID;
     }
     state[layout.start_ix.x][layout.start_ix.y] = config.WROTE_ID;
@@ -105,26 +106,17 @@ function mouseReleased(){
 function init_state(){
     cleared=false;
     n = calc_n_tile(clear_count[stage]);
-    // state = new Array(n).fill(0).map(() => new Array(n).fill(0));
-    state = new Array(n).fill(config.BLOCK_ID);
+    layout = generate_tile_layout(n);
+    console.log('start_ix:', layout.start_ix);
+    console.log('white_ix:', layout.white_ix);
+    state = new Array(n);
     for(let i=0; i<n; i++)state[i] = new Array(n).fill(config.BLOCK_ID);
-    layout = generate_tile_layout();
-    for(let i=0;i<n;i++){
-        for(let j=0;j<n;j++){
-            state[i][j] = config.BLOCK_ID;
-        }
-    }
-    // for(let i=0; i<layout.block_ix.length; i++){
-    //     ix = layout.block_ix[i];
-    //     state[ix.x][ix.y] = config.BLOCK_ID;
-    // }
     for(let i=0; i<layout.white_ix.length; i++){
-        // console.log('white', layout.white_ix[i]);
-        ix = layout.white_ix[i];
+        let ix = layout.white_ix[i];
         state[ix.x][ix.y] = config.WHITE_ID;
     }
     state[layout.start_ix.x][layout.start_ix.y] = config.WROTE_ID;
-    move_history = [{'x':start_ix.x, 'y':start_ix.y}];
+    move_history = [{'x':layout.start_ix.x, 'y':layout.start_ix.y}];
     return state;
 }
 
@@ -141,7 +133,7 @@ function is_clear(){
 function clear_performance(){
     if(frameCount%3!=0)return;
     if(move_history.length > 0){
-        ix = move_history.pop();
+        let ix = move_history.pop();
         state[ix.x][ix.y] = 0;
         return 'continue';
     }else{
@@ -154,7 +146,7 @@ function calc_n_tile(clear_count){
 }
 
 function communicate_html(){
-    obj = document.getElementById('show_world');
+    let obj = document.getElementById('show_world');
     obj.innerText = '世界 '+ (stage+1) + ', ステージ ' + clear_count[stage];
 }
 
@@ -200,7 +192,7 @@ function load_cookie(){
     if(!can_use_cookie)return;
     if(document.cookie.length == 0)return;
     for(let i=0; i<clear_count.length; i++){
-        count = int(document.cookie
+        let count = int(document.cookie
         .split('; ')
         .find(row => row.startsWith('ClearCount' + i))
         .split('=')[1]);

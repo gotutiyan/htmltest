@@ -3,13 +3,13 @@ config = {
     'WROTE_ID':1,
     'BLOCK_ID':2,
 }
-const N_STAGES = 10;
+const N_STAGES=10;
 const WHITE_ID=0;
 const WROTE_ID=1;
 const BLOCK_ID=2;
-const limitation_tiles_ratio = 0.8;
+const limitation_tiles_ratio=0.8;
 
-const tile_colors = [
+const tile_colors=[
     '#84302F',
     '#2F4E84',
     '#2F8439',
@@ -22,7 +22,7 @@ const tile_colors = [
     '#842F56'
 ]
 
-const criteria = [
+const criteria=[
     '',
     '世界1で\n100ステージ以上',
     '世界2で\n150ステージ以上',
@@ -36,7 +36,7 @@ const criteria = [
     'Coming soon...'
 ]
 
-let judge_criteria = [
+let judge_criteria=[
     function(){return true},
     function(){
         return clear_count[0] >= 100;
