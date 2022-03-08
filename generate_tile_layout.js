@@ -235,9 +235,12 @@ function expand_root(){
                 white_ix.push({'x':nx, 'y':ny});
                 now_ix.x = nx;
                 now_ix.y = ny;
-                found=true;
+                found = true;
                 break;
             }
+        }
+        if((white_ix.length+1) / (n*n) >= limitation_tiles_ratio){
+            break;
         }
         if(!found)break;
     }

@@ -11,23 +11,18 @@
     <script type="text/javascript" src="clear_count.js"></script>
     <script type="text/javascript" src="generate_tile_layout.js"></script>
     <script>
-        if (!document.cookie.split(';').some(function(item) {
-        return item.trim().indexOf('ClearCount0=') >= 0
-    })) {
-        var comfirm_result = confirm('進行状況の自動保存のためにcookieを使用しても良いですか？．\nキャンセルを選択した場合，進行状況は保存されません．');
-        set_cookie(comfirm_result);
-    }else{
-        set_cookie(true);
-    }
+        // confirm_cookie();
     </script>
     
 </head>
 <body>
     <h1 id='show_world' style="text-align: center;"></h1>
+    <button id='confirm_cookie' onclick="confirm_cookie()">Cookieを有効にする</button>
     <button onclick="init_state()">Re-generate</button>
-    <button onclick="update_stage(-1)">前の世界へ</button>
+    <button onclick="update_stage(-1)">前の世界へ</buttos>
     <button onclick="update_stage(1)">次の世界へ</button>
     <div id="result"></div>
+    <button onclick="reset_game()">リセット</button>
 </body>
 <footer>
 </footer>
