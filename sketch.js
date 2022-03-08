@@ -5,9 +5,9 @@ let frame_len_half = 250;
 let tile_len = 0;
 let can_use_cookie = false;
 function setup(){
-    let canvas_len = min(windowWidth*0.8, windowHeight*0.8);
+    let canvas_len = min(windowWidth*0.85, windowHeight*0.85);
     let canvas = createCanvas(canvas_len, canvas_len);
-    frame_len_half = min(width * 0.45, height* 0.45);
+    frame_len_half = min(canvas_len * 0.45, canvas_len * 0.45);
     let result = document.getElementById('result');
     canvas.parent(result);
     confirm_cookie();
@@ -20,7 +20,6 @@ function draw(){
     background(255);
     translate(width/2, height/2);
     tile_len = (2*frame_len_half) / n;
-    // console.log(state.length);
     draw_tile(n, frame_len_half, tile_len, state);
     if(is_clear()){
         cleared = true;
@@ -43,7 +42,6 @@ function draw_tile(n, frame_len_half, tile_len, state){
         for(let i=0; i<n; i++){
             for(let j=0; j<n; j++){
                 if (state[i][j]==config.WHITE_ID)fill(255);
-                // else if(state[i][j]==config.WROTE_ID)fill(100,10,10, 100);
                 else if(state[i][j]==config.WROTE_ID)fill(tile_color);
                 else if(state[i][j]==config.BLOCK_ID)fill(100);
                 rect(-frame_len_half+i*tile_len, -frame_len_half+j*tile_len, tile_len, tile_len);
@@ -56,7 +54,7 @@ function draw_tile(n, frame_len_half, tile_len, state){
         fill(0);
         textSize(30);
         strokeWeight(1);
-        text('開放条件: \n'+criteria[stage], -frame_len_half + 10, -frame_len_half + 50);
+        text('開放条件:\n'+criteria[stage], -frame_len_half + 10, -frame_len_half + 50);
     }
 }
 
@@ -152,7 +150,6 @@ function clear_performance(){
 }
 
 function calc_n_tile(clear_count){
-    // clear_count: 0~
     return int(Math.log2(clear_count+4));
 }
 
@@ -179,7 +176,7 @@ function confirm_cookie(){
     })) {
         can_use_cookie = true;
     }else{
-        var comfirm_result = confirm('進行状況の自動保存のためにcookieを使用しても良いですか？\nキャンセルを選択した場合，進行状況は保存されません．');
+        var comfirm_result = confirm('進行状況の自動保存のためにcookieを使用してもいいですか？\nキャンセルを選択した場合，進行状況は保存されません．');
         can_use_cookie = comfirm_result;
     }
     if(can_use_cookie){

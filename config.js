@@ -24,48 +24,48 @@ const tile_colors = [
 
 const criteria = [
     '',
-    '世界1で\n50ステージ以上',
-    '世界2で\n100ステージ以上',
-    '世界1,2,3の合計で\n300ステージ以上',
-    '世界1,2,3,4の合計で\n600ステージ以上',
-    '世界5で\n200ステージ以上',
-    '世界6で\n300ステージ以上',
-    '世界1,2,3,4,5,6,7の合計で\n2500ステージ以上',
-    '世界8で\n500ステージ以上',
-    '世界9で\n600ステージ以上',
+    '世界1で\n100ステージ以上',
+    '世界2で\n150ステージ以上',
+    '世界1,2,3の合計で\n500ステージ以上',
+    '世界1,2,3,4の合計で\n700ステージ以上',
+    '世界5で\n300ステージ以上',
+    '世界6で\n500ステージ以上',
+    '世界1,2,3,4,5,6,7の合計で\n4000ステージ以上',
+    '世界8で\n700ステージ以上',
+    '世界9で\n900ステージ以上',
     'Coming soon...'
 ]
 
 let judge_criteria = [
     function(){return true},
     function(){
-        return clear_count[0] >= 50;
+        return clear_count[0] >= 100;
     },
     function(){
-        return clear_count[1] >= 100;
+        return clear_count[1] >= 200;
     },
     function(){
-        return clear_count[0] + clear_count[1] + clear_count[2] >= 300;
+        return clear_count[0] + clear_count[1] + clear_count[2] >= 500;
     },
     function(){
-        return clear_count[0] + clear_count[1] + clear_count[2] + clear_count[3] >= 600;
+        return clear_count[0] + clear_count[1] + clear_count[2] + clear_count[3] >= 700;
     },
     function(){
-        return clear_count[4] >= 200;
+        return clear_count[4] >= 300;
     },
     function(){
-        return clear_count[5] >= 300;
+        return clear_count[5] >= 500;
     },
     function(){
         sum = 0;
         for(let i=0;i<7;i++)sum += clear_count[i];
-        return sum >= 2500;
+        return sum >= 4000;
     },
     function(){
-        return clear_count[7] >= 500;
+        return clear_count[7] >= 700;
     },
     function(){
-        return clear_count[8] >= 600;
+        return clear_count[8] >= 900;
     },
     function(){
         // coming soon
