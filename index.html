@@ -10,19 +10,18 @@
     <script type="text/javascript" src="sketch.js"></script>
     <script type="text/javascript" src="clear_count.js"></script>
     <script type="text/javascript" src="generate_tile_layout.js"></script>
-    <script>
-        // confirm_cookie();
-    </script>
-    
+    <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
-    <h1 id='show_world' style="text-align: center;"></h1>
-    <button id='confirm_cookie' onclick="confirm_cookie()">Cookieを有効にする</button>
-    <button onclick="init_state()">Re-generate</button>
-    <button onclick="update_stage(-1)">前の世界へ</buttos>
-    <button onclick="update_stage(1)">次の世界へ</button>
-    <div id="result"></div>
-    <button onclick="reset_game()">リセット</button>
+    <div id='content'>
+        <h1 id='show_world' style="text-align: center;"></h1>
+        <button id='confirm_cookie' onclick="confirm_cookie()">Cookieを有効にする</button>
+        <button onclick="init_state()">盤面再生成</button>
+        <button onclick="update_stage(-1)">前の世界へ</buttos>
+        <button onclick="update_stage(1)">次の世界へ</button>
+        <div id="result"></div>
+        <!-- <button onclick="reset_game()">リセット</button> -->
+    </div>
 </body>
 <footer>
 </footer>

@@ -5,7 +5,8 @@ let frame_len_half = 250;
 let tile_len = 0;
 let can_use_cookie = false;
 function setup(){
-    let canvas = createCanvas(windowWidth, windowHeight*0.8);
+    let canvas_len = min(windowWidth*0.7, windowHeight*0.7)
+    let canvas = createCanvas(canvas_len, canvas_len);
     frame_len_half = min(width * 0.4, height* 0.4);
     let result = document.getElementById('result');
     canvas.parent(result);
@@ -173,13 +174,13 @@ function update_stage(mode){
 }
 
 function confirm_cookie(){
-    if (!document.cookie.split(';').some(function(item) {
+    if (document.cookie.split(';').some(function(item) {
         return item.trim().indexOf('ClearCount0=') >= 0
     })) {
-        var comfirm_result = confirm('進行状況の自動保存のためにcookieを使用しても良いですか？．\nキャンセルを選択した場合，進行状況は保存されません．');
-        can_use_cookie = comfirm_result;
-    }else{
         can_use_cookie = true;
+    }else{
+        var comfirm_result = confirm('進行状況の自動保存のためにcookieを使用しても良いですか？\nキャンセルを選択した場合，進行状況は保存されません．');
+        can_use_cookie = comfirm_result;
     }
     if(can_use_cookie){
         let button = document.getElementById('confirm_cookie')
@@ -201,7 +202,6 @@ function save_cookie(){
 function load_cookie(){
     if(!can_use_cookie)return;
     if(document.cookie.length == 0)return;
-    cookies = document.cookie.split(':');
     for(let i=0; i<clear_count.length; i++){
         count = int(document.cookie
         .split('; ')
@@ -212,7 +212,7 @@ function load_cookie(){
 }
 
 function reset_game(){
-    let can_rest = alert('ゲームをリセットしていいですか？\n進行状況は全て破棄されます．')
+    let can_rest = confirm('ゲームをリセットしていいですか？\n進行状況は全て破棄されます．')
     if(can_rest){
         for(let i=0; i<N_STAGES; i++){
             clear_count[i] = 0;
