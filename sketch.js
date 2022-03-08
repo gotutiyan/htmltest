@@ -210,3 +210,20 @@ function reset_game(){
     save_cookie();
     init_state();
 }
+
+function tweet(){
+    let tweet_text = '';
+    for(let i=0; i<N_STAGES; i++){
+        if(clear_count[i] != 0){
+            tweet_text += '世界' + (i+1) + ',ステージ:' + clear_count[i] + '%0A';
+        }
+    }
+    let tweet_url = 'gotutiyan.github.io/htmltest' + '%0A';
+    let tweet_hashtag = '無限一筆書き' + '%0A'
+    let link = 'https://twitter.com/intent/tweet?'
+        + 'text=' + tweet_text
+        + '&url=' + tweet_url
+        + '&hashtags=' + tweet_hashtag
+    console.log(link);
+    return link;
+}

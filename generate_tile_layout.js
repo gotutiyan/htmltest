@@ -1,5 +1,9 @@
 function generate_tile_layout(n){
-    return expand_root(n)
+    while(true){
+        let layout = expand_root(n);
+        if(white_ratio(n, layout.state_temp) >= 0.6)return layout;
+    }
+    
 }
 
 function is_inner(x){
@@ -21,7 +25,9 @@ function expand_root(n){
     start_ix.y = random_int(n);
     state_temp[start_ix.x][start_ix.y] = config.WROTE_ID;
     // debug(state);
-    let now_ix = start_ix;
+    let now_ix = {'x':0, 'y':0};
+    now_ix.x = start_ix.x;
+    now_ix.y = start_ix.y;
     let white_ix = [];
     while(true){
         let sidx = random_int(4);
@@ -35,6 +41,7 @@ function expand_root(n){
                 now_ix.x = nx;
                 now_ix.y = ny;
                 found = true;
+                console.log('x, y', nx, ny);
                 break;
             }
         }
@@ -44,7 +51,7 @@ function expand_root(n){
         if(!found)break;
     }
     // debug(state);
-    return {'start_ix':start_ix, 'white_ix':white_ix};
+    return {'start_ix':start_ix, 'white_ix':white_ix, 'state_temp':state_temp};
 }
 
 function n_can_move(x, y, state_temp){
@@ -59,6 +66,18 @@ function n_can_move(x, y, state_temp){
         }
     }
     return t;
+}
+
+function white_ratio(n, state){
+    let t = 0;
+    for(let i=0; i<n; i++){
+        for(let j=0; j<n; j++){
+            if(state[i][j] == config.WROTE_ID){
+                t++;
+            }
+        }
+    }
+    return t / (n*n);
 }
 
 function debug(state){
