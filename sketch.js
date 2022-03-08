@@ -5,7 +5,7 @@ let frame_len_half = 250;
 let tile_len = 0;
 let can_use_cookie = false;
 function setup(){
-    let canvas_len = min(windowWidth*0.9, windowHeight*0.9)
+    let canvas_len = min(windowWidth*0.8, windowHeight*0.8);
     let canvas = createCanvas(canvas_len, canvas_len);
     frame_len_half = min(width * 0.45, height* 0.45);
     let result = document.getElementById('result');

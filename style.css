@@ -4,17 +4,20 @@
     background-color: #FFFFFF; 
   } */
 
-body{
+/* body{
 position: fixed;
 left: 0px;
 right: 0px;
 top: 0px;
 bottom:0px;
-}
+} */
+html, body{
+    overflow: hidden;
+  }
   
 canvas{
     display: block;
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     right: 0;
     bottom: 0;
