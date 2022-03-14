@@ -8,6 +8,7 @@ const WHITE_ID=0;
 const WROTE_ID=1;
 const BLOCK_ID=2;
 const limitation_tiles_ratio=0.8;
+const COOKIE_EXPIRES=365;
 
 const tile_colors=[
     '#84302F',
@@ -30,7 +31,7 @@ const criteria=[
     '世界1,2,3,4の合計で\n700ステージ以上',
     '世界5で\n300ステージ以上',
     '世界6で\n500ステージ以上',
-    '世界1,2,3,4,5,6,7の合計で\n4000ステージ以上',
+    '世界1,2,3,4,5,6,7\nの合計で\n4000ステージ以上',
     '世界8で\n700ステージ以上',
     '世界9で\n900ステージ以上',
     'Coming soon...'

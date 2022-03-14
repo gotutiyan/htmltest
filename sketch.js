@@ -181,9 +181,11 @@ function confirm_cookie(){
 
 function save_cookie(){
     if(!can_use_cookie)return;
+    var now = new Date();
+    now.setTime(now.getTime() + COOKIE_EXPIRES*24*60*60*1000);
     for(let i=0; i<clear_count.length; i++){
         // console.log('ClearCount' + i + '=' + clear_count[i]);
-        document.cookie = 'ClearCount' + i + '=' + clear_count[i];
+        document.cookie = 'ClearCount' + i + '=' + clear_count[i] + "; expires=" + now.toGMTString();
     }
     console.log('Saved to cookie:', document.cookie);
 }
@@ -198,6 +200,34 @@ function load_cookie(){
         .split('=')[1]);
         clear_count[i] = count;
     }
+}
+
+function show_progress(){
+    let progress = ''
+    for(let i=0; i<clear_count.length; i++){
+        // console.log('ClearCount' + i + '=' + clear_count[i]);
+        progress += 'W' + i + 'S' + clear_count[i] + 'o';
+    }
+    let obj = document.getElementById('progress_str');
+    obj.innerText = progress;
+    return progress
+}
+
+function load_progress(){
+    progress = window.prompt("W0から始まる復元用コードを入力してください．", "");
+    for(let i=0; i<clear_count.length; i++){
+        let count = int(progress
+        .split('o')
+        .find(row => row.startsWith('W' + i))
+        .split('S')[1]);
+        if(count == undefined){
+            clear_count[i] = 0;
+        }else{
+            clear_count[i] = count;
+        }
+    }
+    save_cookie();
+    init_state();
 }
 
 function reset_game(){
@@ -218,7 +248,7 @@ function tweet(){
             tweet_text += '世界:' + (i+1) + ',ステージ:' + clear_count[i] + '%0A';
         }
     }
-    let tweet_url = 'gotutiyan.github.io/htmltest' + '%0A';
+    let tweet_url = 'gotutiyan.github.io/infinity_one_stroke' + '%0A';
     let tweet_hashtag = '無限一筆書き' + '%0A'
     let link = 'https://twitter.com/intent/tweet?'
         + 'text=' + tweet_text
