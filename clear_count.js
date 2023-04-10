@@ -1,1 +1,0 @@
-let clear_count = new Array(N_STAGES+1).fill(0);
